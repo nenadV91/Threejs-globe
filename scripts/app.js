@@ -5,6 +5,17 @@ class App {
     window.app = this;
   }
 
+  init = () => {
+    this.initScene();
+    this.initRenderer();
+    this.initCamera();
+    this.initOrbitControls();
+    this.initStats();
+
+    this.render();
+    this.update();
+  }
+
   initScene = () => {
     this.scene = new THREE.Scene();
   }
@@ -19,52 +30,39 @@ class App {
   initCamera = () => {
     this.ratio = window.innerWidth / window.innerHeight;
     this.camera = new THREE.PerspectiveCamera(45, this.ratio, 0.1, 1000);
-
-    this.camera.position.x = 0;
-    this.camera.position.y = 10;
-    this.camera.position.z = 55;
     this.camera.lookAt(this.scene.position);
-  }
-
-  addControlGui = callback => {
-    var gui = new dat.GUI();
-    callback(gui);
+    this.camera.position.set(0, 15, 30);
   }
 
   initOrbitControls = () => {
-    this.orbitControls = new THREE.OrbitControls(this.camera);
+    this.controls = new THREE.OrbitControls(this.camera);
   }
 
   initStats = () => {
     this.stats = new Stats();
     this.stats.setMode(0);
-
     this.stats.domElement.style.position = 'absolute';
     this.stats.domElement.style.left = '0px';
     this.stats.domElement.style.top = '0px';
-
     document.body.appendChild( this.stats.domElement );
   }
 
-  init = () => {
-    this.initScene();
-    this.initCamera();
-    this.initRenderer();
-    this.initStats();
-    this.initOrbitControls();
+  render = () => {
     this.setup(this);
-
     document.body.appendChild(this.renderer.domElement);
-    this.render();
   }
 
-  render = () => {
+  update = () => {
     this.animate(this);
     this.stats.update();
-    this.orbitControls.update();
-    
-    requestAnimationFrame(this.render);
+    this.controls.update();
     this.renderer.render(this.scene, this.camera);
+    requestAnimationFrame(this.update);
+  }
+
+  addControlGui = callback => {
+    var gui = new dat.GUI();
+    callback(gui);
   }
 
   handleResize = () => {
