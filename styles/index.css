@@ -7,3 +7,7 @@ html {
 canvas {
   vertical-align: top;
 }
+
+.dg.a {
+	margin-top: 10px;
+}

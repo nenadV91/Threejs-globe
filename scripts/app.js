@@ -1,11 +1,12 @@
 class App {
-  constructor({animate, setup}) {
+  constructor({animate, setup, preload}) {
+    this.preload = preload;
     this.animate = animate;
     this.setup = setup;
     window.app = this;
   }
 
-  init = () => {
+  init = async () => {
     this.initScene();
     this.initRenderer();
     this.initCamera();
@@ -14,6 +15,10 @@ class App {
 
     this.render();
     this.update();
+
+    if(this.preload) {
+      await this.preload();
+    }
   }
 
   initScene = () => {
@@ -21,15 +26,17 @@ class App {
   }
 
   initRenderer = () => {
-    this.renderer = new THREE.WebGLRenderer();
+    this.renderer = new THREE.WebGLRenderer({alpha: true});
     this.renderer.setClearColor(0x000000, 1.0);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setPixelRatio(window.devicePixelRatio * 1.5);
     this.renderer.shadowMap.enabled = true;
+    this.renderer.antialias = true;
   }
 
   initCamera = () => {
     this.ratio = window.innerWidth / window.innerHeight;
-    this.camera = new THREE.PerspectiveCamera(45, this.ratio, 0.1, 1000);
+    this.camera = new THREE.PerspectiveCamera(60, this.ratio, 0.1, 10000);
     this.camera.lookAt(this.scene.position);
     this.camera.position.set(0, 15, 30);
   }
@@ -42,8 +49,8 @@ class App {
     this.stats = new Stats();
     this.stats.setMode(0);
     this.stats.domElement.style.position = 'absolute';
-    this.stats.domElement.style.left = '0px';
-    this.stats.domElement.style.top = '0px';
+    this.stats.domElement.style.left = '10px';
+    this.stats.domElement.style.top = '10px';
     document.body.appendChild( this.stats.domElement );
   }
 
@@ -69,12 +76,5 @@ class App {
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-  }
-
-  rotate = (speed) => {
-    const {camera, scene} = this;
-    camera.position.x = camera.position.x * Math.cos(speed) + camera.position.z * Math.sin(speed);
-    camera.position.z = camera.position.z * Math.cos(speed) - camera.position.x * Math.sin(speed);
-    camera.lookAt(scene.position);
   }
 }
