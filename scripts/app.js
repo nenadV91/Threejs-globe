@@ -10,15 +10,15 @@ class App {
     this.initScene();
     this.initRenderer();
     this.initCamera();
-    this.initOrbitControls();
+    this.initControls();
     this.initStats();
-
-    this.render();
-    this.update();
 
     if(this.preload) {
       await this.preload();
     }
+
+    this.render();
+    this.update();
   }
 
   initScene = () => {
@@ -41,7 +41,7 @@ class App {
     this.camera.position.set(0, 15, 30);
   }
 
-  initOrbitControls = () => {
+  initControls = () => {
     this.controls = new THREE.OrbitControls(this.camera);
   }
 
