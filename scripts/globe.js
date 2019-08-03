@@ -1,5 +1,5 @@
 const createGlobe = () => {
-  const radius = props.globe.radius;
+  const radius = props.globe.radius - props.globe.radius * 0;
   const widthS = 64;
   const heightS = 64;
   
@@ -9,9 +9,9 @@ const createGlobe = () => {
   const globeMaterial = createGlobeMaterial(textureUrl);
   elements.globe = new THREE.Mesh( geometry, globeMaterial );
 
-  const atmosphereMaterial = createAtmosphereMaterial();
-  elements.atmosphere = new THREE.Mesh( geometry, atmosphereMaterial )
-  elements.atmosphere.scale.set(1.2, 1.2, 1.2);
+  // const atmosphereMaterial = createAtmosphereMaterial();
+  // elements.atmosphere = new THREE.Mesh( geometry, atmosphereMaterial )
+  // elements.atmosphere.scale.set(1.2, 1.2, 1.2);
   
   groups.globe = new THREE.Group();
   groups.globe.name = 'Globe';
