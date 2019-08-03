@@ -7,6 +7,10 @@ const loader = new THREE.TextureLoader();
 const controls = {}
 const data = {}
 
+const urls = {
+  globeTexture: '../assets/textures/earth_dark.jpg'
+}
+
 const elements = {
   globe: null,
   atmosphere: null,
@@ -19,9 +23,11 @@ const textures = {
 
 const groups = {
   main: null,
-  globe: null,
-  globePoints: null,
-  globeMarkers: null
+  globe: null
+}
+
+const sizes = {
+  globe: 200
 }
 
 const props = {
@@ -33,14 +39,18 @@ const props = {
     markerPoint: 'rgb(143, 216, 216)',
     markerGlow: 'rgb(255, 255, 255)'
   },
-  globe: {
-    radius: 200
-  },
   map: {
     width: 2048 / 2,
     height: 1024 / 2
   }
 }
+
+const scale = {
+  points: 0.025,
+  markers: 0.025,
+  globe: 0
+}
+
 
 
 async function preload() {
@@ -61,8 +71,10 @@ async function preload() {
   }
 }
 
+
+
 function setup(app) {
-  app.camera.position.z = props.globe.radius * 2.45;
+  app.camera.position.z = sizes.globe * 2.45;
   app.controls.enableDamping = true;
   app.controls.dampingFactor = 0.05;
   app.controls.rotateSpeed = 0.07;
@@ -70,14 +82,22 @@ function setup(app) {
   groups.main = new THREE.Group();
   groups.main.name = 'Main';
 
+  groups.globe = new THREE.Group();
+  groups.globe.name = 'Globe';
+
+  const globe = new Globe();
+  groups.main.add(globe);
+
+  const points = new Points(data.grid);
+  groups.globe.add(points);
+
+  const markers = new Markers(data.countries)
+  groups.globe.add(markers);
+
   app.scene.add(groups.main);
-
-  createGlobe();
-  createGlobePoints();
-
-  new Markers(data.countries)
-  groups.globe.add(groups.globeMarkers);
 }
+
+
 
 function animate(app) {
   if(elements.globeDots) {
@@ -85,7 +105,7 @@ function animate(app) {
   }
 
   if(groups.globe) {
-    groups.globe.rotation.y += props.rotation.globe
+    groups.globe.rotation.y += props.rotation.globe;
   }
 
   if(elements.markers) {

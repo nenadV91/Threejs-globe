@@ -3,7 +3,7 @@ class Markers {
     markerRadius = 2
   } = {}) {
     this.countries = countries;
-    this.radius = props.globe.radius;
+    this.radius = sizes.globe + sizes.globe * scale.markers;
 
     groups.globeMarkers = new THREE.Group();
     groups.globeMarkers.name = 'GlobeMarkers';
@@ -14,6 +14,7 @@ class Markers {
     this.markerMaterial.opacity = 0.8;
 
     this.create();
+    return groups.globeMarkers;
   }
 
   create() {
