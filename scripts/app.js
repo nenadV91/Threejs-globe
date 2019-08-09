@@ -42,7 +42,7 @@ class App {
   }
 
   initControls = () => {
-    this.controls = new THREE.OrbitControls(this.camera);
+    this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
   }
 
   initStats = () => {

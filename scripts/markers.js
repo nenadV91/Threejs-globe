@@ -20,8 +20,10 @@ class Markers {
   create() {
     for(let i = 0; i < this.countries.length; i++) {
       const country = this.countries[i];
-      if(country.latlng) {
-        const [lat, lng] = country.latlng;
+      if(country.latitude && country.longitude) {
+        const lat = +country.latitude;
+        const lng = +country.longitude;
+
         const cords = toSphereCoordinates(lat, lng, this.radius);
         const marker = new Marker(this.markerMaterial, this.markerGeometry, country.name, cords);
         elements.markers.push(marker);

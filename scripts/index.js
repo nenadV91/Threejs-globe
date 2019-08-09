@@ -8,13 +8,15 @@ const controls = {}
 const data = {}
 
 const urls = {
-  globeTexture: '../assets/textures/earth_dark.jpg'
+  globeTexture: '../assets/textures/earth_dark.jpg',
+  pointTexture: '../assets/imgs/disc.png'
 }
 
 const elements = {
   globe: null,
   atmosphere: null,
-  markers: []
+  markers: [],
+  lines: []
 }
 
 const textures = {
@@ -23,7 +25,8 @@ const textures = {
 
 const groups = {
   main: null,
-  globe: null
+  globe: null,
+  lines: null
 }
 
 const sizes = {
@@ -37,11 +40,17 @@ const props = {
   colors: {
     globePoint: 'rgb(255, 204, 0)',
     markerPoint: 'rgb(143, 216, 216)',
-    markerGlow: 'rgb(255, 255, 255)'
+    markerGlow: 'rgb(255, 255, 255)',
+    lines: new THREE.Color('#18FFFF')
   },
   map: {
     width: 2048 / 2,
     height: 1024 / 2
+  },
+  countries: {
+    selected: null,
+    selectedIndex: 0,
+    total: 25
   }
 }
 
@@ -49,6 +58,11 @@ const scale = {
   points: 0.025,
   markers: 0.025,
   globe: 0
+}
+
+const countries = {
+  selected: null,
+  index: 0
 }
 
 
@@ -63,7 +77,7 @@ async function preload() {
     const countryUrl = '../assets/data/countries.json';
     const countryRes = await fetch(countryUrl);
     const countries = await countryRes.json();
-    data.countries = countries.slice(0, 25);
+    data.countries = countries
 
     return true;
   } catch(error) {
@@ -72,9 +86,9 @@ async function preload() {
 }
 
 
-
 function setup(app) {
   app.camera.position.z = sizes.globe * 2.45;
+  app.camera.position.y = sizes.globe * 0;
   app.controls.enableDamping = true;
   app.controls.dampingFactor = 0.05;
   app.controls.rotateSpeed = 0.07;
@@ -82,21 +96,17 @@ function setup(app) {
   groups.main = new THREE.Group();
   groups.main.name = 'Main';
 
-  groups.globe = new THREE.Group();
-  groups.globe.name = 'Globe';
-
   const globe = new Globe();
   groups.main.add(globe);
 
   const points = new Points(data.grid);
   groups.globe.add(points);
 
-  const markers = new Markers(data.countries)
+  const markers = new Markers(data.countries);
   groups.globe.add(markers);
 
   app.scene.add(groups.main);
 }
-
 
 
 function animate(app) {

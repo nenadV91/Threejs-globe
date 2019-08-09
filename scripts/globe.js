@@ -3,6 +3,9 @@ class Globe {
     this.radius = sizes.globe + sizes.globe * scale.globe;
     this.geometry = new THREE.SphereGeometry(this.radius, 64, 64);
 
+    groups.globe = new THREE.Group();
+    groups.globe.name = 'Globe';
+
     this.initGlobe();
     
     return groups.globe;

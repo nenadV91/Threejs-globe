@@ -38,7 +38,7 @@ class Points {
     this.material = new THREE.ShaderMaterial({
       uniforms: {
         color: { value: new THREE.Color( 0xffffff ) },
-        pointTexture: { value: loader.load( "../assets/imgs/disc.png" ) }
+        pointTexture: { value: loader.load( urls.pointTexture ) }
       },
       vertexShader: shaders.dot.vertexShader,
       fragmentShader: shaders.dot.fragmentShader,
