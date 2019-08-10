@@ -13,6 +13,7 @@ canvas {
 
 .dg.a {
 	margin-top: 10px;
+	min-width: 300px;
 }
 
 .app-wrapper {

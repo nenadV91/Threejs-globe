@@ -1,6 +1,6 @@
 class Globe {
   constructor(radius) {
-    this.radius = sizes.globe + sizes.globe * scale.globe;
+    this.radius = config.sizes.globe;
     this.geometry = new THREE.SphereGeometry(this.radius, 64, 64);
 
     groups.globe = new THREE.Group();
@@ -12,10 +12,17 @@ class Globe {
   }
 
   initGlobe() {
+    const scale = config.scale.globeScale;
     this.globeMaterial = this.createGlobeMaterial();
     this.globe = new THREE.Mesh( this.geometry, this.globeMaterial );
+    this.globe.scale.set(scale, scale, scale);
     elements.globe = this.globe;
-    groups.globe.add(this.globe);
+    
+    groups.map = new THREE.Group();
+    groups.map.name = 'Map';
+
+    groups.map.add(this.globe);
+    groups.globe.add(groups.map);
   }
 
   initAtmosphere() {
@@ -23,12 +30,17 @@ class Globe {
     this.atmosphere = new THREE.Mesh( this.geometry, this.atmosphereMaterial )
     this.atmosphere.scale.set(1.2, 1.2, 1.2);
     elements.atmosphere = this.atmosphere;
-    groups.globe.add(this.atmosphere); 
+
+    groups.atmosphere = new THREE.Group();
+    groups.atmosphere.name = 'Atmosphere';
+
+    groups.atmosphere.add(this.atmosphere);
+    groups.globe.add(groups.atmosphere); 
   }
 
   createGlobeMaterial() {
      return new THREE.ShaderMaterial({
-      uniforms: {texture: { value: loader.load(urls.globeTexture) }},
+      uniforms: {texture: { value: loader.load(config.urls.globeTexture) }},
       vertexShader: shaders.globe.vertexShader,
       fragmentShader: shaders.globe.fragmentShader,
       blending: THREE.AdditiveBlending,

@@ -2,17 +2,19 @@ class Points {
   constructor(grid) {
     this.grid = grid;
     this.total = grid.length;
-    this.radius = sizes.globe + sizes.globe * scale.points;
+    this.radius = config.sizes.globe + config.sizes.globe * config.scale.points;
     
     this.sizeArray = [];
     this.positionArray = [];
     this.colorsArray = [];
 
-    this.pointSize = 6;
-    this.pointColor = props.colors.globePoint;
+    groups.points = new THREE.Group();
+    groups.points.name = 'Points';
 
     this.create();
-    return this.points;
+
+    elements.globePoints = this.points;
+    groups.points.add(this.points);
   }
 
   create() {
@@ -35,14 +37,9 @@ class Points {
 
     this.texture = new THREE.Texture(this.createTexture());
     this.geometry = new THREE.BufferGeometry();
-    this.material = new THREE.ShaderMaterial({
-      uniforms: {
-        color: { value: new THREE.Color( 0xffffff ) },
-        pointTexture: { value: loader.load( urls.pointTexture ) }
-      },
-      vertexShader: shaders.dot.vertexShader,
-      fragmentShader: shaders.dot.fragmentShader,
-      alphaTest: 0.5
+    this.material = new THREE.PointsMaterial({
+      color: config.colors.globeDotColor,
+      size: config.sizes.globeDotSize
     });
 
     this.geometry.addAttribute('position', new THREE.BufferAttribute( positions, 3 ));
@@ -50,6 +47,19 @@ class Points {
     this.geometry.addAttribute('size', new THREE.BufferAttribute( sizes, 1 ));
   
     this.points = new THREE.Points( this.geometry,  this.material );
+  }
+
+  updateColor(col) {
+   const color = new THREE.Color();
+
+    for(let i = 0; i < this.grid.length; i++) {
+      color.set(col);
+      color.toArray(this.colorsArray, i * 3);
+    } 
+
+    const colorsArray = new Float32Array(this.colorsArray);
+    const colors = new THREE.BufferAttribute( colorsArray, 3 );
+    this.geometry.attributes.customColor = colors;
   }
 
   createTexture() {

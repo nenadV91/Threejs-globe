@@ -1,8 +1,8 @@
 class Marker {
   constructor(material, geometry, label, cords, {
     textColor = 'white',
-    pointColor = props.colors.markerPoint,
-    glowColor = props.colors.markerGlow
+    pointColor = config.colors.globeMarkerColor,
+    glowColor = config.colors.globeMarkerGlow
   } = {}) {
     this.material = material;
     this.geometry = geometry;
@@ -12,8 +12,8 @@ class Marker {
     this.isAnimating = false;
 
     this.textColor = textColor;
-    this.pointColor = pointColor;
-    this.glowColor = glowColor;
+    this.pointColor = new THREE.Color(pointColor);
+    this.glowColor = new THREE.Color(glowColor);
 
     this.group = new THREE.Group();
     this.group.name = 'Marker';
@@ -23,7 +23,7 @@ class Marker {
     this.createGlow();
     this.setPosition();
 
-    groups.globeMarkers.add(this.group);
+    groups.markers.add(this.group);
   }
 
   createLabel() {

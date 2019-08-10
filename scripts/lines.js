@@ -8,7 +8,6 @@ class Lines {
 
 		this.create();
 		this.animate();
-		return this.group;
 	}
 
 	animate() {
@@ -41,7 +40,7 @@ class Lines {
 	create() {
 		const {connections, countries} = data;
 		const geometry = new THREE.Geometry();
-		const radius = sizes.globe + sizes.globe * scale.markers;
+		const radius = config.sizes.globe + config.sizes.globe * config.scale.markers;
 
 		for(let i in connections) {
 			const startCountry = getCountry(i, countries);
@@ -67,13 +66,15 @@ class Lines {
 				line.setGeometry(geometry);
 
 				const material = new MeshLineMaterial({
-					color: props.colors.lines,
+					color: config.colors.globeLines,
 					transparent: true,
 					opacity: 0.45
 				});
 
 				const curveObject = new THREE.Mesh(line.geometry, material);
 				curveObject._path = geometry.vertices;
+
+				elements.lines.push(curveObject);
 
 				group.add(curveObject);
 			}

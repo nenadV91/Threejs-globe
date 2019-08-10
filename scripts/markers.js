@@ -3,18 +3,17 @@ class Markers {
     markerRadius = 2
   } = {}) {
     this.countries = countries;
-    this.radius = sizes.globe + sizes.globe * scale.markers;
+    this.radius = config.sizes.globe + config.sizes.globe * config.scale.markers;
 
-    groups.globeMarkers = new THREE.Group();
-    groups.globeMarkers.name = 'GlobeMarkers';
+    groups.markers = new THREE.Group();
+    groups.markers.name = 'GlobeMarkers';
 
     this.markerGeometry = new THREE.SphereGeometry(markerRadius, 15, 15);
-    this.markerMaterial = new THREE.MeshBasicMaterial({color: props.colors.markerPoint});
+    this.markerMaterial = new THREE.MeshBasicMaterial({color: config.colors.markerPoint});
     this.markerMaterial.transparent = true;
     this.markerMaterial.opacity = 0.8;
 
     this.create();
-    return groups.globeMarkers;
   }
 
   create() {
