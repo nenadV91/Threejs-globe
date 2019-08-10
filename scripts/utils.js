@@ -33,7 +33,6 @@ function returnCurveCoordinates(latitudeA, longitudeA, latitudeB, longitudeB, si
   let midZ = midPointZ + multipleVal * midPointZ ;
 
 
-
   return {
     start: {
       x: start.x,
@@ -55,7 +54,6 @@ function returnCurveCoordinates(latitudeA, longitudeA, latitudeB, longitudeB, si
 
 
 
-
 const GLOBE_RADIUS = 200;
 const CURVE_MIN_ALTITUDE = 20;
 const CURVE_MAX_ALTITUDE = 200;
@@ -65,26 +63,23 @@ function clamp(num, min, max) {
   return num <= min ? min : (num >= max ? max : num);
 }
 
-// util function to convert lat/lng to 3D point on globe
 function coordinateToPosition(lat, lng, radius) {
-  const phi = (90 - lat) * DEGREE_TO_RADIAN;
-  const theta = (lng + 180) * DEGREE_TO_RADIAN;
+  var phi = (90 - lat) * Math.PI / 180;
+  var theta = (180 - lng) * Math.PI / 180;
 
   return new THREE.Vector3(
     - radius * Math.sin(phi) * Math.cos(theta),
     radius * Math.cos(phi),
-    radius * Math.sin(phi) * Math.sin(theta)
+    - radius * Math.sin(phi) * Math.sin(theta)
   );
 }
-
-
 
 function getSplineFromCoords(latitudeA, longitudeA, latitudeB, longitudeB, size) {
   const start = coordinateToPosition(latitudeA, longitudeA, size);
   const end = coordinateToPosition(latitudeB, longitudeB, size);
   
   // altitude
-  const altitude = clamp(start.distanceTo(end) * .4, CURVE_MIN_ALTITUDE, CURVE_MAX_ALTITUDE);
+  const altitude = clamp(start.distanceTo(end) * .45, CURVE_MIN_ALTITUDE, CURVE_MAX_ALTITUDE);
   
   // 2 control points
   const interpolate = d3.geoInterpolate([longitudeA, latitudeA], [longitudeB, latitudeB]);
@@ -97,51 +92,3 @@ function getSplineFromCoords(latitudeA, longitudeA, latitudeB, longitudeB, size)
 }
 
 
-function extractCountries(list, countries) {
-  return list.map(name => {
-    const country = countries.find(c => c.name === name);
-    const {latitude, longitude} = country;
-    return {name, latitude, longitude};
-  })
-}
-
-
-
-const mockSelected = [
-  'Serbia', 
-  'Germany', 
-  'Russian Federation', 
-  'Netherlands', 
-  'Macao SAR, China', 
-  'Croatia', 
-  'France', 
-  'Japan', 
-  'United States', 
-  'Mexico', 
-  'Italy', 
-  'Luxembourg', 
-  'New Zealand',
-  'Congo, Dem. Rep.', 
-  'Ukraine', 
-  'South Africa',
-  'Nigeria',
-  'Kenya',
-  'Ghana',
-  'Sudan',
-  'Ecuador',
-  'Paraguay',
-  'Colombia'
-  ];
-
-const mockConnections = {
-  'Serbia': ['Germany', 'Croatia', 'France', 'Italy'],
-  'France': ['Luxembourg', 'New Zealand','Congo, Dem. Rep.', 'Ukraine'],
-  'Italy': ['Croatia', 'France', 'Italy'],
-  'United States': ['Mexico', 'New Zealand'],
-  'Luxembourg': ['Serbia', 'Germany', 'Netherlands'],
-  'South Africa': ['Nigeria', 'Kenya', 'Ghana', 'Sudan']
-}
-
-function getCountry(name, countries) {
-  return countries.find(c => c.name === name);
-}

@@ -61,6 +61,7 @@ const scale = {
 }
 
 const countries = {
+  interval: 50000,
   selected: null,
   index: 0
 }
@@ -77,7 +78,12 @@ async function preload() {
     const countryUrl = '../assets/data/countries.json';
     const countryRes = await fetch(countryUrl);
     const countries = await countryRes.json();
-    data.countries = countries
+    data.countries = countries;
+
+    const connectionsUrl = '../assets/data/connections.json';
+    const connectionsRes = await fetch(connectionsUrl);
+    const connections = await connectionsRes.json();
+    data.connections = getCountries(connections, countries);    
 
     return true;
   } catch(error) {
@@ -105,6 +111,9 @@ function setup(app) {
   const markers = new Markers(data.countries);
   groups.globe.add(markers);
 
+  const lines = new Lines();
+  groups.globe.add(lines);
+
   app.scene.add(groups.main);
 }
 
@@ -114,9 +123,9 @@ function animate(app) {
     elements.globeDots.material.map.needsUpdate = true;
   }
 
-  if(groups.globe) {
-    groups.globe.rotation.y += props.rotation.globe;
-  }
+  // if(groups.globe) {
+  //   groups.globe.rotation.y += props.rotation.globe;
+  // }
 
   if(elements.markers) {
     for(let i = 0; i < elements.markers.length; i++) {
