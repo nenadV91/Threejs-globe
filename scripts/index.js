@@ -36,18 +36,23 @@ function setup(app) {
   const controllers = [];
 
   app.addControlGui(gui => {
-    controllers.push(gui.addColor(config.colors, 'globeDotColor'))
-    controllers.push(gui.addColor(config.colors, 'globeMarkerColor'))
-    controllers.push(gui.addColor(config.colors, 'globeMarkerGlow'))
-    controllers.push(gui.addColor(config.colors, 'globeLines'))
-
-    controllers.push(gui.add(config.sizes, 'globeDotSize', 1, 5))
-    controllers.push(gui.add(config.scale, 'globeScale', 0.1, 1))
-
-    controllers.push(gui.add(config.display, 'map'))
-    controllers.push(gui.add(config.display, 'points'))
-    controllers.push(gui.add(config.display, 'markers'))
-
+    const colorFolder = gui.addFolder('Colors');
+    controllers.push(colorFolder.addColor(config.colors, 'globeDotColor'))
+    controllers.push(colorFolder.addColor(config.colors, 'globeMarkerColor'))
+    controllers.push(colorFolder.addColor(config.colors, 'globeMarkerGlow'))
+    controllers.push(colorFolder.addColor(config.colors, 'globeLines'))
+    controllers.push(colorFolder.addColor(config.colors, 'globeLinesDots'))
+    
+    const sizeFolder = gui.addFolder('Sizes')
+    controllers.push(sizeFolder.add(config.sizes, 'globeDotSize', 1, 5))
+    controllers.push(sizeFolder.add(config.scale, 'globeScale', 0.1, 1))
+    
+    const displayFolder = gui.addFolder('Display');
+    controllers.push(displayFolder.add(config.display, 'map'))
+    controllers.push(displayFolder.add(config.display, 'points'))
+    controllers.push(displayFolder.add(config.display, 'markers'))
+    
+    displayFolder.open();
   });
 
   controllers.forEach(controller => {
@@ -103,12 +108,18 @@ function animate(app) {
       }
     }
 
-
     groups.map.visible = config.display.map;
     groups.markers.visible = config.display.markers;
     groups.points.visible = config.display.points;
 
     controls.changed = false
+  }
+
+  if(elements.lineDots) {
+    for(let i = 0; i < elements.lineDots.length; i++) {
+      const dot = elements.lineDots[i];
+      dot.animate();
+    }
   }
 
   if(elements.markers) {

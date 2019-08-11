@@ -19,13 +19,17 @@ const config = {
 	    globeDotColor: 'rgb(255, 204, 0)',
 	    globeMarkerColor: 'rgb(143, 216, 216)',
 	    globeMarkerGlow: 'rgb(255, 255, 255)',
-	    globeLines: 'rgb(24, 255, 255)'
+	    globeLines: 'rgb(255, 255, 255)',
+	    globeLinesDots: 'rgb(255, 255, 255)'
   	},
   	display: {
   		markers: true,
   		points: true,
   		map: true,
   		lines: true
+  	},
+  	dots: {
+  		total: 30
   	}
 }
 
@@ -33,6 +37,7 @@ const elements = {
 	globe: null,
 	atmosphere: null,
 	globePoints: null,
+	lineDots: [],
 	markers: [],
 	lines: []
 }
@@ -48,11 +53,12 @@ const groups = {
 	lines: null,
 	points: null,
 	markers: null,
-	atmosphere: null
+	atmosphere: null,
+	lineDots: null
 }
 
 const countries = {
-	interval: 50000,
+	interval: 20000,
 	selected: null,
 	index: 0
 }
