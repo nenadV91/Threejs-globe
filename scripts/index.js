@@ -51,6 +51,9 @@ function setup(app) {
     controllers.push(displayFolder.add(config.display, 'map'))
     controllers.push(displayFolder.add(config.display, 'points'))
     controllers.push(displayFolder.add(config.display, 'markers'))
+    controllers.push(displayFolder.add(config.display, 'markerLabel'))
+    controllers.push(displayFolder.add(config.display, 'markerPoint'))
+
     
     displayFolder.open();
   });
@@ -90,7 +93,7 @@ function animate(app) {
   if(controls.changed) {
     if(elements.globePoints) {
       elements.globePoints.material.size = config.sizes.globeDotSize;
-      elements.globePoints.material.color = new THREE.Color(config.colors.globeDotColor);
+      elements.globePoints.material.color.set(config.colors.globeDotColor);
     }
 
     if(elements.globe) {
@@ -104,7 +107,7 @@ function animate(app) {
     if(elements.lines) {
       for(let i = 0; i < elements.lines.length; i++) {
         const line = elements.lines[i];
-        line.material.color = new THREE.Color(config.colors.globeLines);
+        line.material.color.set(config.colors.globeLines);
       }
     }
 
@@ -112,12 +115,25 @@ function animate(app) {
     groups.markers.visible = config.display.markers;
     groups.points.visible = config.display.points;
 
+    for(let i = 0; i < elements.markerLabel.length; i++) {
+      const label = elements.markerLabel[i];
+      label.visible = config.display.markerLabel;
+    }
+
+    for(let i = 0; i < elements.markerPoint.length; i++) {
+      const point = elements.markerPoint[i];
+      point.visible = config.display.markerPoint;
+    }
+
     controls.changed = false
   }
+
+
 
   if(elements.lineDots) {
     for(let i = 0; i < elements.lineDots.length; i++) {
       const dot = elements.lineDots[i];
+      dot.material.color.set(config.colors.globeLinesDots);
       dot.animate();
     }
   }
@@ -125,8 +141,8 @@ function animate(app) {
   if(elements.markers) {
     for(let i = 0; i < elements.markers.length; i++) {
       const marker = elements.markers[i];
-      marker.point.material.color = new THREE.Color(config.colors.globeMarkerColor);
-      marker.glow.material.color = new THREE.Color(config.colors.globeMarkerGlow);
+      marker.point.material.color.set(config.colors.globeMarkerColor);
+      marker.glow.material.color.set(config.colors.globeMarkerGlow);
       marker.label.material.map.needsUpdate = true;
       marker.animateGlow();
     }

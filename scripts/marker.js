@@ -43,12 +43,14 @@ class Marker {
     this.label.translateY(2);
 
     this.group.add(this.label);
+    elements.markerLabel.push(this.label);
   }
 
   createPoint() {
     this.point = new THREE.Mesh( this.geometry, this.material );
     this.point.material.color.set(this.pointColor);
     this.group.add(this.point);
+    elements.markerPoint.push(this.point);
   }
 
   createGlow() {
@@ -56,6 +58,7 @@ class Marker {
     this.glow.material.color.set(this.glowColor);
     this.glow.material.opacity = 0.6;
     this.group.add(this.glow);
+    elements.markerPoint.push(this.glow);
   }
 
   animateGlow() {

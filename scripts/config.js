@@ -1,7 +1,7 @@
 const config = {
 	urls: {
 		globeTexture: '../assets/textures/earth_dark.jpg',
-  		pointTexture: '../assets/imgs/disc.png'
+		pointTexture: '../assets/imgs/disc.png'
 	},
 	sizes: {
 		globe: 200,
@@ -13,24 +13,26 @@ const config = {
 		globeScale: 1
 	},
 	rotation: {
-	    globe: 0.001
+		globe: 0.001
 	},
 	colors: {
-	    globeDotColor: 'rgb(255, 204, 0)',
-	    globeMarkerColor: 'rgb(143, 216, 216)',
-	    globeMarkerGlow: 'rgb(255, 255, 255)',
-	    globeLines: 'rgb(255, 255, 255)',
-	    globeLinesDots: 'rgb(255, 255, 255)'
-  	},
-  	display: {
-  		markers: true,
-  		points: true,
-  		map: true,
-  		lines: true
-  	},
-  	dots: {
-  		total: 30
-  	}
+		globeDotColor: 'rgb(255, 204, 0)',
+		globeMarkerColor: 'rgb(143, 216, 216)',
+		globeMarkerGlow: 'rgb(255, 255, 255)',
+		globeLines: 'rgb(255, 255, 255)',
+		globeLinesDots: 'rgb(255, 255, 255)'
+	},
+	display: {
+		points: true,
+		map: true,
+		lines: true,
+		markers: true,
+		markerLabel: true,
+		markerPoint: true
+	},
+	dots: {
+		total: 30
+	}
 }
 
 const elements = {
@@ -39,6 +41,8 @@ const elements = {
 	globePoints: null,
 	lineDots: [],
 	markers: [],
+	markerLabel: [],
+	markerPoint: [],
 	lines: []
 }
 
@@ -54,7 +58,7 @@ const groups = {
 	points: null,
 	markers: null,
 	atmosphere: null,
-	lineDots: null
+	lineDots: null,
 }
 
 const countries = {
