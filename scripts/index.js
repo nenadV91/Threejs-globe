@@ -53,6 +53,9 @@ function setup(app) {
     controllers.push(displayFolder.add(config.display, 'markers'))
     controllers.push(displayFolder.add(config.display, 'markerLabel'))
     controllers.push(displayFolder.add(config.display, 'markerPoint'))
+    
+    const animationsFolder = gui.addFolder('Animations');
+    controllers.push(animationsFolder.add(animations, 'rotateGlobe'))
 
     
     displayFolder.open();
@@ -64,7 +67,7 @@ function setup(app) {
     })
   })
 
-  app.camera.position.z = config.sizes.globe * 2.45;
+  app.camera.position.z = config.sizes.globe * 2.85;
   app.camera.position.y = config.sizes.globe * 0;
   app.controls.enableDamping = true;
   app.controls.dampingFactor = 0.05;
@@ -146,6 +149,10 @@ function animate(app) {
       marker.label.material.map.needsUpdate = true;
       marker.animateGlow();
     }
+  }
+
+  if(animations.rotateGlobe) {
+    groups.globe.rotation.y -= 0.0025;
   }
 }
 

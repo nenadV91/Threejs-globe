@@ -10,13 +10,13 @@ const config = {
 	scale: {
 		points: 0.025,
 		markers: 0.025,
-		globeScale: 1
+		globeScale: 0.65
 	},
 	rotation: {
 		globe: 0.001
 	},
 	colors: {
-		globeDotColor: 'rgb(255, 204, 0)',
+		globeDotColor: 'rgb(203, 168, 0)',
 		globeMarkerColor: 'rgb(143, 216, 216)',
 		globeMarkerGlow: 'rgb(255, 255, 255)',
 		globeLines: 'rgb(255, 255, 255)',
@@ -65,4 +65,8 @@ const countries = {
 	interval: 20000,
 	selected: null,
 	index: 0
+}
+
+const animations = {
+  rotateGlobe: true
 }
