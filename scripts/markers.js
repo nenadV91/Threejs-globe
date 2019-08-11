@@ -9,7 +9,7 @@ class Markers {
     groups.markers.name = 'GlobeMarkers';
 
     this.markerGeometry = new THREE.SphereGeometry(markerRadius, 15, 15);
-    this.markerMaterial = new THREE.MeshBasicMaterial({color: config.colors.markerPoint});
+    this.markerMaterial = new THREE.MeshBasicMaterial();
     this.markerMaterial.transparent = true;
     this.markerMaterial.opacity = 0.8;
 
