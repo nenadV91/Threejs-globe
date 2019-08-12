@@ -10,20 +10,20 @@ const data = {}
 
 async function preload() {
   try {
-    const gridUrl = '../assets/data/grid.json';
-    const gridRes = await fetch(gridUrl);
-    const grid = await gridRes.json();
-    data.grid = grid;
+    // const gridUrl = '../assets/data/grid.json';
+    // const gridRes = await fetch(gridUrl);
+    // const grid = await gridRes.json();
+    // data.grid = grid;
 
-    const countryUrl = '../assets/data/countries.json';
-    const countryRes = await fetch(countryUrl);
-    const countries = await countryRes.json();
-    data.countries = countries;
+    // const countryUrl = '../assets/data/countries.json';
+    // const countryRes = await fetch(countryUrl);
+    // const countries = await countryRes.json();
+    // data.countries = countries;
 
-    const connectionsUrl = '../assets/data/connections.json';
-    const connectionsRes = await fetch(connectionsUrl);
-    const connections = await connectionsRes.json();
-    data.connections = getCountries(connections, countries);    
+    // const connectionsUrl = '../assets/data/connections.json';
+    // const connectionsRes = await fetch(connectionsUrl);
+    // const connections = await connectionsRes.json();
+    // data.connections = getCountries(connections, countries);    
 
     return true;
   } catch(error) {
