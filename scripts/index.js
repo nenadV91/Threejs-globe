@@ -58,7 +58,7 @@ function setup(app) {
     controllers.push(animationsFolder.add(animations, 'rotateGlobe'))
 
     
-    displayFolder.open();
+    sizeFolder.open();
   });
 
   controllers.forEach(controller => {

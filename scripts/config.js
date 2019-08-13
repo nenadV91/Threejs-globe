@@ -10,7 +10,7 @@ const config = {
 	scale: {
 		points: 0.025,
 		markers: 0.025,
-		globeScale: 0.65
+		globeScale: 1
 	},
 	rotation: {
 		globe: 0.001

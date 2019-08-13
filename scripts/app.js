@@ -49,8 +49,8 @@ class App {
     this.stats = new Stats();
     this.stats.setMode(0);
     this.stats.domElement.style.position = 'absolute';
-    this.stats.domElement.style.left = '10px';
-    this.stats.domElement.style.top = '10px';
+    this.stats.domElement.style.right = '10px';
+    this.stats.domElement.style.bottom = '10px';
     document.body.appendChild( this.stats.domElement );
   }
 

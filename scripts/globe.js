@@ -39,13 +39,23 @@ class Globe {
   }
 
   createGlobeMaterial() {
-     return new THREE.ShaderMaterial({
-      uniforms: {texture: { value: loader.load(config.urls.globeTexture) }},
+    const texture = loader.load('null')
+    console.log(texture)
+
+    const shaderMaterial = new THREE.ShaderMaterial({
+      uniforms: {texture: { value:  texture }},
       vertexShader: shaders.globe.vertexShader,
       fragmentShader: shaders.globe.fragmentShader,
       blending: THREE.AdditiveBlending,
       transparent: true,
     })
+
+    const normalMaterial = new THREE.MeshBasicMaterial({
+      blending: THREE.AdditiveBlending,
+      transparent: true,
+    })
+
+    return shaderMaterial;
   }
 
   createGlobeAtmosphere() {
