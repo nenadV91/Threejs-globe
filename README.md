@@ -5,7 +5,7 @@ Particles globe with countries in threejs
 
 ### Preview
 ---
-![Preview](https://github.com/nenadV91/Particles/blob/previews/preview.png?raw=true "Home preview 1")
+![Preview](https://raw.githubusercontent.com/nenadV91/Threejs-globe/master/previews/preview.png?raw=true "Home preview 1")
 
 ## Author
 Nenad Vracar
